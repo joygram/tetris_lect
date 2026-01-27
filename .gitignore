@@ -1,0 +1,16 @@
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+vendor/
+.bundle/
+*.gem
+*.rbc
+.DS_Store
+Library/
+Packages/
+ProjectSettings/
+Assets/
+.meta-editor-paths.json
+Temp/
+Logs/

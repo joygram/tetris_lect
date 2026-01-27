@@ -1,0 +1,57 @@
+# Jekyll 설정 파일
+title: Unity 테트리스 강의 블로그
+description: 중학생을 위한 Unity 테트리스 게임 개발 강의 자료
+author: 강사
+lang: ko-KR
+encoding: utf-8
+
+# GitHub Pages 설정
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# 테마 설정 (Minima 테마 사용)
+theme: minima
+
+# 사이트 설정
+url: "" # GitHub Pages URL이 자동으로 설정됩니다
+baseurl: "" # 저장소 이름이 baseurl이면 여기에 입력
+
+# 마크다운 설정
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+
+# 빌드 설정
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle
+  - vendor/cache
+  - vendor/gems
+  - vendor/ruby
+  - Library
+  - Packages
+  - ProjectSettings
+  - Assets
+  - .gitignore
+  - .meta-editor-paths.json
+  - Logs
+  - Temp
+  - UserSettings
+
+# 네비게이션
+navigation:
+  - title: 홈
+    url: /
+  - title: 단계별 학습
+    url: /단계별-학습/
+  - title: 참고자료
+    url: /참고자료/
+
+# 소셜 미디어 (선택사항)
+# twitter_username: your_username
+# github_username: your_username
