@@ -12,6 +12,15 @@ Unity로 구현한 클래식 테트리스 게임입니다.
 GitHub Pages가 활성화되면 다음 URL에서 접속할 수 있습니다:
 - `https://[사용자명].github.io/[저장소명]/`
 
+**URL 확인 방법**:
+1. GitHub 저장소의 **Settings** → **Pages**로 이동
+2. "Your site is live at..." 메시지에서 URL 확인
+3. 또는 직접 계산: `https://[GitHub사용자명].github.io/[저장소이름]/`
+
+예시:
+- 사용자명: `myusername`, 저장소명: `tetris`
+- 블로그 URL: `https://myusername.github.io/tetris/`
+
 ### 📖 블로그 구조
 
 블로그는 **단계별 학습** 방식으로 구성되어 있습니다:
