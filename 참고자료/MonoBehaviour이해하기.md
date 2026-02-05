@@ -35,7 +35,7 @@ MonoBehaviour 스크립트
 **Unity에서**:
 - GameObject만으로는 아무것도 못함
 - MonoBehaviour 스크립트를 붙이면 기능이 생김
-- Tetromino 스크립트를 붙이면 블록이 움직임
+- TetrisBlock 스크립트를 붙이면 블록이 움직임
 
 ---
 
@@ -53,7 +53,7 @@ public class Calculator
 
 **MonoBehaviour 클래스**:
 ```csharp
-public class Tetromino : MonoBehaviour
+public class TetrisBlock : MonoBehaviour
 {
     // MonoBehaviour를 상속받음
     // Unity가 자동으로 관리해줌
@@ -72,13 +72,13 @@ public class Tetromino : MonoBehaviour
 
 ```
 1단계: 스크립트 작성
-  └─ public class Tetromino : MonoBehaviour { ... }
+  └─ public class TetrisBlock : MonoBehaviour { ... }
   ↓
 2단계: GameObject 생성
   └─ Hierarchy에서 Create Empty
   ↓
 3단계: 스크립트를 GameObject에 붙이기
-  └─ Inspector에서 Add Component > Tetromino
+  └─ Inspector에서 Add Component > TetrisBlock
   ↓
 4단계: Unity가 자동으로 관리
   └─ Start(), Update() 자동 호출
@@ -90,12 +90,27 @@ public class Tetromino : MonoBehaviour
 
 ## 🎮 MonoBehaviour의 주요 함수들
 
+### 💡 Awake / Start / Update 용도 한눈에
+
+| 함수 | 언제? | 용도 (쉽게 말하면) |
+|------|--------|---------------------|
+| **Awake()** | 게임이 켜질 때 **가장 먼저**, 딱 한 번 | "다른 것보다 먼저 준비할 일" (예: 빈 배열 만들기, 값 세팅) |
+| **Start()** | Awake 다음에, **한 번만** | "준비가 끝난 뒤 할 일" (예: 다른 오브젝트 찾기, 처음 위치 정하기) |
+| **Update()** | 게임이 도는 동안 **매 프레임** 반복 | "계속 확인하거나 바꿔 줄 일" (예: 키 입력, 타이머, 이동) |
+
+**비유**:
+- **Awake** = 출근해서 책상 정리 (한 번만, 맨 먼저)
+- **Start** = 업무 시작 버튼 누르기 (한 번만)
+- **Update** = 업무하는 동안 계속 반복하는 일 (입력 확인, 화면 갱신)
+
+---
+
 ### 1. Start() - 게임 시작 시 한 번만 실행
 
 **비유**: 자동차 시동을 거는 것
 
 ```csharp
-public class Tetromino : MonoBehaviour
+public class TetrisBlock : MonoBehaviour
 {
     void Start()
     {
@@ -143,7 +158,7 @@ void Start()
 **비유**: 자동차의 엔진이 계속 돌아가는 것
 
 ```csharp
-public class Tetromino : MonoBehaviour
+public class TetrisBlock : MonoBehaviour
 {
     void Update()
     {
@@ -225,8 +240,8 @@ Update() 반복 실행...
 ```
 
 **언제 사용하나요?**
-- 다른 스크립트보다 먼저 초기화해야 할 때
-- 변수를 준비해야 할 때
+- **다른 스크립트보다 먼저** 초기화해야 할 때 (예: GameBoard의 grid 배열은 다른 스크립트가 Start에서 찾기 전에 있어야 함)
+- "한 번만 준비해 두면 되는 값"을 세팅할 때
 
 **테트리스 예시**:
 ```csharp
@@ -247,7 +262,7 @@ void Awake()
 ```
 GameObject (게임 오브젝트)
   ├─ Transform (위치, 회전, 크기)
-  ├─ Tetromino (MonoBehaviour 스크립트)
+  ├─ TetrisBlock (MonoBehaviour 스크립트)
   │   ├─ Start() 함수
   │   ├─ Update() 함수
   │   └─ MoveLeft() 함수 등
@@ -263,12 +278,12 @@ GameObject (게임 오브젝트)
 
 ### 실제 예시
 
-**테트리스 블록 (Tetromino)**:
+**테트리스 블록 (TetrisBlock)**:
 
 ```
-GameObject: "Tetromino"
+GameObject: "TetrisBlock"
   ├─ Transform: 위치는 (5, 19, 0)
-  ├─ Tetromino (MonoBehaviour)
+  ├─ TetrisBlock (MonoBehaviour)
   │   ├─ position = (5, 19)
   │   ├─ cells = [블록들의 위치]
   │   ├─ Start(): 블록 초기화
@@ -296,7 +311,7 @@ public class Calculator
 
 **MonoBehaviour**:
 ```csharp
-public class Tetromino : MonoBehaviour
+public class TetrisBlock : MonoBehaviour
 {
     void Update()
     {
@@ -321,7 +336,7 @@ public class Calculator
 
 **MonoBehaviour**:
 ```csharp
-public class Tetromino : MonoBehaviour
+public class TetrisBlock : MonoBehaviour
 {
     void Start()
     {
@@ -329,7 +344,7 @@ public class Tetromino : MonoBehaviour
         transform.position = new Vector3(5, 10, 0);
         
         // gameObject도 자동으로 연결됨!
-        Debug.Log(gameObject.name);  // "Tetromino"
+        Debug.Log(gameObject.name);  // "TetrisBlock"
     }
 }
 ```
@@ -408,7 +423,7 @@ public class Counter : MonoBehaviour
 **테트리스 블록 예시**:
 
 ```csharp
-public class Tetromino : MonoBehaviour
+public class TetrisBlock : MonoBehaviour
 {
     private Vector2Int position;
     private float fallTimer = 0f;
