@@ -31,8 +31,23 @@ Unity 프로젝트 만들기 → 스크립트 작성 → 실행까지 (약 20~30
 
 1. **Unity Hub** 실행 → **New Project** → **2D** 템플릿 선택
 2. **Project name**: `Tetris` 입력 → **Create project** 클릭
-3. 에디터가 열리면 **Scene**(씬), **Hierarchy**(하이어러키), **Inspector**(인스펙터), **Project**(프로젝트), **Console**(콘솔) 창이 보임. 안 보이면 **Window > Layouts > Default**(윈도우 → 레이아웃 → 디폴트).  
-   → 영어 표기 읽기가 어렵다면 **[영어 용어 발음·표기](../참고자료/영어-용어-발음-표기.md)** 참고.
+3. 에디터가 열리면 **Scene**(읽는 법: 씬), **Hierarchy**(읽는 법: 하이어러키), **Inspector**(읽는 법: 인스펙터), **Project**(읽는 법: 프로젝트), **Console**(읽는 법: 콘솔) 창이 보임. 안 보이면 **Window > Layouts > Default**(읽는 법: 윈도우 → 레이아웃스 → 디폴트).  
+   → **전체 단어 발음**은 **[영어 용어 발음·표기](../참고자료/영어-용어-발음-표기.md)** 에 한글 발음(읽는 법)으로 정리되어 있습니다. 발음기호 없이 한글만 보셔도 됩니다.
+
+<span id="location-tree-notation"></span>  
+**📌 위치 표기 규칙 (트리)**  
+2~8단계 설명에서 **어디를 눌러야 하는지** 헷갈리지 않도록, **위치**를 아래처럼 **트리**로 적습니다. 괄호 안이 **창 > 항목 > 하위 항목** 순서입니다. (규칙 전체: [1단계 - 위치 표기 규칙](./1단계-Unity-기초.md#location-tree-notation))
+
+| 표기 | 의미 |
+|------|------|
+| **상단 씬 탭** | 에디터 맨 위, 씬 이름이 보이는 탭 |
+| **[Hierarchy > 오브젝트명]** | Hierarchy(읽는 법: 하이어러키) 창에서 해당 오브젝트 한 번 클릭 |
+| **[Hierarchy > 부모 > 자식]** | Hierarchy에서 부모를 펼친 뒤 자식 오브젝트 |
+| **[Inspector > 컴포넌트명 > 필드명]** | 오브젝트 선택 시 오른쪽 Inspector(읽는 법: 인스펙터)에서 해당 컴포넌트·필드 |
+| **[Project > Assets > 폴더 > 파일]** | Project(읽는 법: 프로젝트) 창에서 폴더를 연 뒤 해당 파일 |
+| **[메뉴 > 하위메뉴]** | 상단 메뉴바 (File, GameObject, Window 등) |
+
+예: **"[Hierarchy > GameBoard > BoardBackground] 선택"** = Hierarchy 창에서 GameBoard를 펼치고 BoardBackground를 클릭.
 
 ### 2. 작업 씬 이름 확인 및 저장 (필수)
 
@@ -55,7 +70,7 @@ Unity가 처음 열리면 **SimpleScene**, **SampleScene**, **Untitled** 같은 
 
 **방법 A: 이미 저장된 씬 파일 이름 바꾸기**
 
-1. **Project** 창에서 **Assets** → **Scenes** 폴더를 연다.
+1. **[Project > Assets > Scenes]** 로 이동한다. (Project 창에서 Assets 클릭 → Scenes 폴더 클릭)
 2. 이름을 바꿀 **씬 파일**을 클릭해서 선택한다. (예: `SampleScene`, `SimpleScene`)
 3. **F2** 키를 누르거나, **우클릭** → **Rename** 을 선택한다.
 4. **Tetris** 라고 입력한 뒤 **Enter** 로 확정한다.
@@ -73,8 +88,8 @@ Unity가 처음 열리면 **SimpleScene**, **SampleScene**, **Untitled** 같은 
 
 ### 3. Scripts 폴더
 
-1. **Project** 창에서 **Assets** 클릭 → **우클릭** → **Create > Folder**
-2. 폴더 이름을 **Scripts**로 변경 (F2 또는 더블클릭)
+1. **[Project > Assets]** 에서 **우클릭** → **Create > Folder**
+2. 폴더 이름을 **Scripts**로 변경 (F2 또는 더블클릭). 위치: **[Project > Assets > Scripts]**
 
 ### 4. 스크립트 만들기
 
