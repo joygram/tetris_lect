@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: 1단계 확장 실습 01 - Start와 변수 출력
 ---

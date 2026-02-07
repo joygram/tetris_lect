@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: 5단계 확장 실습 01 - Input과 쿨다운
 ---

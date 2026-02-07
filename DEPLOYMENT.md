@@ -1,4 +1,4 @@
-# GitHub Pages 배포 가이드
+﻿# GitHub Pages 배포 가이드
 
 이 강의 자료를 GitHub Pages 블로그로 게시하는 방법입니다.
 

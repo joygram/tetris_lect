@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: 1단계 - Unity와 C# 기초
 ---
@@ -38,14 +38,14 @@ Unity 프로젝트 만들기 → 스크립트 작성 → 실행까지 (약 20~30
 **📌 위치 표기 규칙 (트리)**  
 2~8단계 설명에서 **어디를 눌러야 하는지** 헷갈리지 않도록, **위치**를 아래처럼 **트리**로 적습니다. 괄호 안이 **창 > 항목 > 하위 항목** 순서입니다. (규칙 전체: [1단계 - 위치 표기 규칙](./1단계-Unity-기초.md#location-tree-notation))
 
-| 표기 | 의미 |
-|------|------|
-| **상단 씬 탭** | 에디터 맨 위, 씬 이름이 보이는 탭 |
-| **[Hierarchy > 오브젝트명]** | Hierarchy(읽는 법: 하이어러키) 창에서 해당 오브젝트 한 번 클릭 |
-| **[Hierarchy > 부모 > 자식]** | Hierarchy에서 부모를 펼친 뒤 자식 오브젝트 |
+| 표기                                  | 의미                                                                        |
+| ------------------------------------- | --------------------------------------------------------------------------- |
+| **상단 씬 탭**                        | 에디터 맨 위, 씬 이름이 보이는 탭                                           |
+| **[Hierarchy > 오브젝트명]**          | Hierarchy(읽는 법: 하이어러키) 창에서 해당 오브젝트 한 번 클릭              |
+| **[Hierarchy > 부모 > 자식]**         | Hierarchy에서 부모를 펼친 뒤 자식 오브젝트                                  |
 | **[Inspector > 컴포넌트명 > 필드명]** | 오브젝트 선택 시 오른쪽 Inspector(읽는 법: 인스펙터)에서 해당 컴포넌트·필드 |
-| **[Project > Assets > 폴더 > 파일]** | Project(읽는 법: 프로젝트) 창에서 폴더를 연 뒤 해당 파일 |
-| **[메뉴 > 하위메뉴]** | 상단 메뉴바 (File, GameObject, Window 등) |
+| **[Project > Assets > 폴더 > 파일]**  | Project(읽는 법: 프로젝트) 창에서 폴더를 연 뒤 해당 파일                    |
+| **[메뉴 > 하위메뉴]**                 | 상단 메뉴바 (File, GameObject, Window 등)                                   |
 
 예: **"[Hierarchy > GameBoard > BoardBackground] 선택"** = Hierarchy 창에서 GameBoard를 펼치고 BoardBackground를 클릭.
 
@@ -94,7 +94,8 @@ Unity가 처음 열리면 **SimpleScene**, **SampleScene**, **Untitled** 같은 
 ### 4. 스크립트 만들기
 
 1. **Scripts** 폴더 선택 → **우클릭** → **Create > C# Script** → 이름 **HelloWorld**
-2. **HelloWorld.cs** 더블클릭해서 열기 → 아래 코드로 **전체 교체**:
+2. **HelloWorld.cs** 더블클릭해서 열기 → 아래 코드로 **전체 교체**  
+   **📌 Visual Studio에서 "파일만" 열릴 때** → Unity에서 **[Assets] → [Open C# Project]** 로 열면 됩니다. **.sln이 아예 없을 때**는 Unity에서 **[Edit] → [Preferences] → [External Tools]** 로 가서 **Regenerate project files** 를 누르면 .sln이 생성됩니다. 자세한 순서는 [Unity 에디터 사용 가이드 - 스크립트 편집기(Visual Studio)로 열기](../참고자료/Unity-에디터-사용가이드.md#스크립트-편집기visual-studio로-열기) 참고.
 
 ```csharp
 using UnityEngine;

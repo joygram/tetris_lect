@@ -7,7 +7,7 @@ title: FindObjectOfType
 
 ## 📖 개념 설명
 
-**FindObjectOfType**은 씬에서 특정 타입의 컴포넌트를 가진 오브젝트를 찾습니다.
+씬에서 특정 타입의 컴포넌트를 가진 오브젝트를 찾을 때 사용합니다.
 
 ```csharp
 GameBoard gameBoard = FindObjectOfType<GameBoard>();
@@ -20,7 +20,7 @@ gameBoard = FindObjectOfType<GameBoard>();
 
 ---
 
-## 🛠️ 실습: FindObjectOfType으로 오브젝트 찾기
+## 🛠️ 실습: 씬에서 오브젝트 찾기
 
 **목표**: 씬에 있는 특정 스크립트를 가진 오브젝트를 찾아 사용합니다.
 

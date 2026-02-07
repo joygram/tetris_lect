@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: 스코어 UI 표시 가이드
 ---

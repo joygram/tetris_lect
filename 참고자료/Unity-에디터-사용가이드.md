@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Unity 에디터 사용 가이드
 ---
@@ -291,6 +291,37 @@ title: Unity 에디터 사용 가이드
 
 ---
 
+### 2-1. 스크립트 편집기(Visual Studio)로 열기
+
+<span id="스크립트-편집기visual-studio로-열기"></span>
+
+**증상**: Unity 프로젝트 폴더를 Visual Studio에서 열었는데 **파일(.cs)만** 보이고, 솔루션 탐색기에서 프로젝트 구조가 안 보이거나 자동완성(IntelliSense)이 동작하지 않음.
+
+**이유**: Unity는 **자체적으로 .sln(솔루션)과 .csproj** 를 생성합니다. **Unity를 통해서** 스크립트를 열어야 이 솔루션이 열리고, Unity API 자동완성·참조가 맞게 됩니다.
+
+**해결 방법 (Unity에서 열기)**  
+1. **Unity 에디터**가 연 상태에서 상단 메뉴 **[Assets]** → **[Open C# Project]** 클릭  
+   → Visual Studio가 **해당 Unity 프로젝트의 솔루션**과 함께 열림.  
+2. 또는 **Project** 창에서 **.cs 파일**(예: HelloWorld.cs)을 **더블클릭**  
+   → **Edit → Preferences → External Tools** 에서 **External Script Editor**가 **Visual Studio**로 되어 있으면, 더블클릭 시 Visual Studio가 솔루션과 함께 열림.
+
+**External Script Editor 설정**  
+- **[Edit]** → **[Preferences]** (Mac: **Unity** → **Settings**) → **[External Tools]**  
+- **External Script Editor** 에서 **Visual Studio** (또는 Visual Studio 2022) 선택  
+- **참고**: 처음에 Visual Studio가 목록에 없으면, Unity 설치 시 "Visual Studio 통합"을 선택했는지 확인하거나, [Unity 다운로드](https://unity.com/download) 페이지에서 **Unity Hub** 경유로 설치 시 **Microsoft Visual Studio Community** 모듈을 추가할 수 있음.
+
+**솔루션(.sln)이 없을 때**  
+프로젝트 폴더에 **.sln** 파일이 없으면 Unity가 아직 프로젝트 파일을 만들지 않은 상태입니다. **Unity 에디터**에서 해당 프로젝트를 연 뒤 아래 중 하나를 하세요.  
+1. **[Edit]** → **[Preferences]** → **[External Tools]** 로 이동 → **Regenerate project files** 버튼 클릭  
+   → 프로젝트 루트(Assets와 같은 위치)에 **.sln** 과 **.csproj** 가 생성됩니다.  
+2. 또는 **[Assets]** → **[Open C# Project]** 를 한 번 누르면, 없을 경우 Unity가 그때 생성한 뒤 Visual Studio를 엽니다.  
+
+생성된 **.sln** 은 프로젝트 폴더 **맨 위**(Assets, ProjectSettings와 같은 단계)에 있습니다. 앞으로는 **Unity에서** **Assets → Open C# Project** 또는 스크립트 더블클릭으로 열면 됩니다.
+
+**정리**: 스크립트는 **파일 탐색기나 Visual Studio에서 폴더를 직접 열지 말고**, **Unity 에디터**에서 **Assets → Open C# Project** 또는 **스크립트 더블클릭**으로 열면 솔루션으로 열립니다.
+
+---
+
 ### 3. UI 요소 생성하기 (Canvas, Text 등)
 
 **Canvas 생성**:
@@ -382,18 +413,18 @@ title: Unity 에디터 사용 가이드
 
 ## ⌨️ 유용한 단축키
 
-| 단축키 | 기능 |
-|--------|------|
-| **Ctrl + S** (Cmd + S) | 저장 |
-| **Ctrl + P** (Cmd + P) | 게임 실행/정지 |
-| **Ctrl + Shift + C** (Cmd + Shift + C) | Console 창 열기 |
-| **W** | 이동 도구 |
-| **E** | 회전 도구 |
-| **R** | 크기 조정 도구 |
-| **F** | 선택한 오브젝트에 카메라 맞추기 |
-| **Ctrl + Z** (Cmd + Z) | 실행 취소 |
-| **Ctrl + Y** (Cmd + Shift + Z) | 다시 실행 |
-| **Delete** | 선택한 오브젝트 삭제 |
+| 단축키                                 | 기능                            |
+| -------------------------------------- | ------------------------------- |
+| **Ctrl + S** (Cmd + S)                 | 저장                            |
+| **Ctrl + P** (Cmd + P)                 | 게임 실행/정지                  |
+| **Ctrl + Shift + C** (Cmd + Shift + C) | Console 창 열기                 |
+| **W**                                  | 이동 도구                       |
+| **E**                                  | 회전 도구                       |
+| **R**                                  | 크기 조정 도구                  |
+| **F**                                  | 선택한 오브젝트에 카메라 맞추기 |
+| **Ctrl + Z** (Cmd + Z)                 | 실행 취소                       |
+| **Ctrl + Y** (Cmd + Shift + Z)         | 다시 실행                       |
+| **Delete**                             | 선택한 오브젝트 삭제            |
 
 ---
 

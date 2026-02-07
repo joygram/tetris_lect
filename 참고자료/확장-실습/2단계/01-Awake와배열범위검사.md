@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: 2단계 확장 실습 01 - Awake와 배열·범위 검사
 ---

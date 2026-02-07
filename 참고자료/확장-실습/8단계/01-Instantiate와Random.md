@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: 8단계 확장 실습 01 - Instantiate와 Random
 ---
