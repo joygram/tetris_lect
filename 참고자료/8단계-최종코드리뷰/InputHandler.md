@@ -9,6 +9,8 @@ title: 코드 리뷰 3단계 - InputHandler
 
 **역할**: 매 프레임 키 입력을 받아, 씬에 있는 **현재 TetrisBlock**의 MoveLeft, MoveRight, MoveDown, Rotate, HardDrop을 호출합니다. 좌우·아래는 쿨다운으로 연속 입력을 보정합니다.
 
+**관련 단계 복기**: [5단계 - 입력 처리](../../단계별-학습/5단계-입력-처리.md)(InputHandler, GetKey/GetKeyDown, 쿨다운, FindObjectOfType&lt;TetrisBlock&gt;) → [8단계 - 게임 완성](../../단계별-학습/8단계-게임-완성.md)(스페이스 → HardDrop).
+
 ---
 
 ## 전체 코드
@@ -18,7 +20,7 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
-    private float moveCooldown = 0.1f;   // 연속 입력 간격(초)
+    private float moveCooldown = 0.1f;   // 연속 입력 간격(초) — 키 누르고 있으면 0.1초마다 한 번만 이동
     private float moveTimer = 0f;
 
     void Update()
@@ -98,12 +100,14 @@ public class InputHandler : MonoBehaviour
 
 ## 복습
 
-| 구분 | 내용 |
-|------|------|
-| **GetKey vs GetKeyDown** | GetKey: 키가 눌린 **매 프레임** true. GetKeyDown: 키가 **눌린 그 프레임 한 번만** true. 좌우·아래는 GetKey+쿨다운, 회전·스페이스는 GetKeyDown. |
-| **쿨다운** | moveTimer += Time.deltaTime로 시간을 쌓고, moveTimer >= moveCooldown일 때만 이동·moveTimer = 0. 연속 입력 시 0.1초 간격으로만 반응. |
-| **FindObjectOfType&lt;TetrisBlock&gt;()** | 씬에 있는 TetrisBlock 컴포넌트를 하나 찾습니다. LockPiece 후에는 현재 블록이 없을 수 있어 null 체크를 합니다. |
-| **호출 흐름** | InputHandler(키 감지) → TetrisBlock.MoveLeft/MoveRight/MoveDown/Rotate/HardDrop(실제 이동·회전·고정). |
+아래는 **5단계·8단계**에서 배운 내용을 정리한 복기 표입니다.
+
+| 구분 | 내용 | 관련 단계 |
+|------|------|-----------|
+| **GetKey vs GetKeyDown** | GetKey: 키가 눌린 **매 프레임** true. GetKeyDown: 키가 **눌린 그 프레임 한 번만** true. 좌우·아래는 GetKey+쿨다운, 회전·스페이스는 GetKeyDown. | 5단계 |
+| **쿨다운** | moveTimer += Time.deltaTime로 시간을 쌓고, moveTimer >= moveCooldown일 때만 이동·moveTimer = 0. 연속 입력 시 0.1초 간격으로만 반응. | 5단계 |
+| **FindObjectOfType&lt;TetrisBlock&gt;()** | 씬에 있는 TetrisBlock 컴포넌트를 하나 찾습니다. LockPiece 후에는 현재 블록이 없을 수 있어 null 체크를 합니다. | 5단계 |
+| **호출 흐름** | InputHandler(키 감지) → TetrisBlock.MoveLeft/MoveRight/MoveDown/Rotate/HardDrop(실제 이동·회전·고정). | 5·8단계 |
 
 ---
 

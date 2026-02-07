@@ -9,6 +9,8 @@ title: 코드 리뷰 4단계 - Spawner
 
 **역할**: 다음 블록을 **프리팹 배열**에서 랜덤으로 골라 spawnPoint 위치에 생성합니다. 게임 오버일 때는 스폰하지 않고 GameController.GameOver()를 호출한 뒤 Time.timeScale = 0으로 멈춥니다.
 
+**관련 단계 복기**: [4단계 - 블록 이동 구현](../../단계별-학습/4단계-블록-이동-구현.md)(Spawner, SpawnNext, Instantiate, spawnPoint) → [8단계 - 게임 완성](../../단계별-학습/8단계-게임-완성.md)(tetrisBlockPrefabs 배열, 랜덤 선택, IsGameOver, Time.timeScale).
+
 ---
 
 ## 전체 코드
@@ -33,14 +35,14 @@ public class Spawner : MonoBehaviour
 
     public void SpawnNext()
     {
-        if (gameBoard.IsGameOver())
+        if (gameBoard.IsGameOver())   // 스폰 영역(맨 위 2줄)에 블록 있으면 게임 오버
         {
             Debug.Log("Game Over!");
             gameController.GameOver();
-            Time.timeScale = 0;
+            Time.timeScale = 0;       // 게임 시간 정지
             return;
         }
-        int randomIndex = Random.Range(0, tetrisBlockPrefabs.Length);
+        int randomIndex = Random.Range(0, tetrisBlockPrefabs.Length);   // 0~6 중 하나
         Instantiate(
             tetrisBlockPrefabs[randomIndex],
             spawnPoint.position,
@@ -72,13 +74,15 @@ public class Spawner : MonoBehaviour
 
 ## 복습
 
-| 구분 | 내용 |
-|------|------|
-| **Instantiate** | 프리팹을 씬에 실제 오브젝트로 만드는 Unity API. (프리팹, 위치, 회전)을 넘깁니다. |
-| **Random.Range(0, Length)** | 0 이상 Length **미만** 정수. 7개면 0~6. |
-| **Time.timeScale = 0** | 게임 시간을 멈춤. Update의 Time.deltaTime이 0이 되어 움직임이 멈춥니다. |
-| **호출 흐름** | LockPiece() → Spawner.SpawnNext() → (게임 오버 아니면) Instantiate(다음 블록). |
-| **Inspector 연결** | Tetris Block Prefabs 7개, Spawn Point 하나 반드시 연결. |
+아래는 **4단계·8단계**에서 배운 내용을 정리한 복기 표입니다.
+
+| 구분 | 내용 | 관련 단계 |
+|------|------|-----------|
+| **Instantiate** | 프리팹을 씬에 실제 오브젝트로 만드는 Unity API. (프리팹, 위치, 회전)을 넘깁니다. | 4·8단계 |
+| **Random.Range(0, Length)** | 0 이상 Length **미만** 정수. 7개면 0~6. | 8단계 |
+| **Time.timeScale = 0** | 게임 시간을 멈춤. Update의 Time.deltaTime이 0이 되어 움직임이 멈춥니다. | 8단계 |
+| **호출 흐름** | LockPiece() → Spawner.SpawnNext() → (게임 오버 아니면) Instantiate(다음 블록). | 6·8단계 |
+| **Inspector 연결** | Tetris Block Prefabs 7개, Spawn Point 하나 반드시 연결. | 4·8단계 |
 
 ---
 

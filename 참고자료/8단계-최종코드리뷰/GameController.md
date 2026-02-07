@@ -9,6 +9,8 @@ title: 코드 리뷰 2단계 - GameController
 
 **역할**: 점수·줄·레벨을 저장하고, UI 텍스트(점수/줄/레벨)를 갱신하며, 게임 오버 시 화면에 "Game Over"를 띄웁니다. TetrisBlock.LockPiece → AddScore, Spawner → GameOver 호출을 받습니다.
 
+**관련 단계 복기**: [7단계 - 점수·레벨 시스템](../../단계별-학습/7단계-점수-레벨-시스템.md)(GameController, AddScore, UpdateUI, TMP_Text) → [8단계 - 게임 완성](../../단계별-학습/8단계-게임-완성.md)(gameOverText, GameOver).
+
 ---
 
 ## 전체 코드
@@ -34,7 +36,7 @@ public class GameController : MonoBehaviour
         UpdateUI();
     }
 
-    public void AddScore(int linesCleared)
+    public void AddScore(int linesCleared)   // 1줄 100, 2줄 300, 3줄 500, 4줄 800 × 레벨
     {
         int points = 0;
         switch (linesCleared)
@@ -96,13 +98,15 @@ public class GameController : MonoBehaviour
 
 ## 복습
 
-| 구분 | 내용 |
-|------|------|
-| **TMP_Text** | TextMeshPro용 타입. `using TMPro` 필요. Inspector에서 "Text - TextMeshPro" 오브젝트를 연결할 때 사용. |
-| **AddScore 호출 흐름** | LockPiece → ClearFullRows() 반환값 → AddScore(linesCleared) → 점수·줄·레벨 갱신 → UpdateUI(). |
-| **GameOver 호출 흐름** | Spawner.SpawnNext()에서 IsGameOver()가 true일 때 gameController.GameOver() 호출 → 화면에 "Game Over" 표시. |
-| **레벨 공식** | level = (lines / 10) + 1. 0줄→1레벨, 10줄→2레벨, 20줄→3레벨 … |
-| **SetActive** | gameObject.SetActive(false)는 비활성(숨김), true는 활성(보임). gameOverText는 시작 시 숨기고, 게임 오버 시에만 켬. |
+아래는 **7단계·8단계**에서 배운 내용을 정리한 복기 표입니다.
+
+| 구분 | 내용 | 관련 단계 |
+|------|------|-----------|
+| **TMP_Text** | TextMeshPro용 타입. `using TMPro` 필요. Inspector에서 "Text - TextMeshPro" 오브젝트를 연결할 때 사용. | 7단계 |
+| **AddScore 호출 흐름** | LockPiece → ClearFullRows() 반환값 → AddScore(linesCleared) → 점수·줄·레벨 갱신 → UpdateUI(). | 7단계 |
+| **GameOver 호출 흐름** | Spawner.SpawnNext()에서 IsGameOver()가 true일 때 gameController.GameOver() 호출 → 화면에 "Game Over" 표시. | 8단계 |
+| **레벨 공식** | level = (lines / 10) + 1. 0줄→1레벨, 10줄→2레벨, 20줄→3레벨 … | 7단계 |
+| **SetActive** | gameObject.SetActive(false)는 비활성(숨김), true는 활성(보임). gameOverText는 시작 시 숨기고, 게임 오버 시에만 켬. | 8단계 |
 
 ---
 

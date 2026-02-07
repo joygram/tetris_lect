@@ -9,6 +9,8 @@ title: 코드 리뷰 1단계 - GameBoard
 
 **역할**: 게임 보드 그리드(width×height)를 2차원 배열로 관리하고, 블록 고정(AddToGrid), 행 제거(ClearFullRows), 게임 오버 판단(IsGameOver), 칸 비었는지(IsCellEmpty)를 담당합니다.
 
+**관련 단계 복기**: [2단계 - 게임 보드 만들기](../../단계별-학습/2단계-게임-보드-만들기.md)(width/height/grid, Awake, IsValidPosition) → [6단계 - 행 제거 시스템](../../단계별-학습/6단계-행-제거-시스템.md)(IsCellEmpty, AddToGrid, ClearFullRows) → [8단계 - 게임 완성](../../단계별-학습/8단계-게임-완성.md)(IsGameOver 추가).
+
 ---
 
 ## 전체 코드
@@ -51,7 +53,7 @@ public class GameBoard : MonoBehaviour
         }
     }
 
-    public bool IsGameOver()
+    public bool IsGameOver()   // 맨 위 2줄(row 18,19)에 블록이 있으면 true
     {
         for (int y = height - 2; y < height; y++)
         {
@@ -171,13 +173,15 @@ public class GameBoard : MonoBehaviour
 
 ## 복습
 
-| 구분 | 내용 |
-|------|------|
-| **Awake vs Start** | Awake는 씬 로드 시 가장 먼저 한 번, Start는 그 다음 한 번. 보드처럼 “다른 스크립트보다 먼저 준비”할 때 Awake에서 grid 생성. |
-| **2차원 배열** | `Transform[,] grid`로 [x, y] 칸에 고정된 블록 조각을 저장. null이면 빈 칸. |
-| **AddToGrid 역순** | SetParent 하면 childCount가 줄어들므로, 자식을 돌 때 **역순**으로 돌아야 4개 모두 처리됨. |
-| **IsGameOver** | 맨 위 2줄(row 18, 19)만 검사. 스폰 위치가 그 근처이므로, 그곳에 블록이 있으면 더 스폰할 수 없음. |
-| **ClearFullRows 흐름** | IsRowFull → ClearRow(지우기) → MoveRowsDown(위 행들 내리기) → 지운 줄 수 반환. |
+아래는 **2단계·6단계·8단계**에서 배운 내용을 정리한 복기 표입니다.
+
+| 구분 | 내용 | 관련 단계 |
+|------|------|-----------|
+| **Awake vs Start** | Awake는 씬 로드 시 가장 먼저 한 번, Start는 그 다음 한 번. 보드처럼 “다른 스크립트보다 먼저 준비”할 때 Awake에서 grid 생성. | 2단계 |
+| **2차원 배열** | `Transform[,] grid`로 [x, y] 칸에 고정된 블록 조각을 저장. null이면 빈 칸. | 2단계 |
+| **AddToGrid 역순** | SetParent 하면 childCount가 줄어들므로, 자식을 돌 때 **역순**으로 돌아야 4개 모두 처리됨. | 6단계 |
+| **IsGameOver** | 맨 위 2줄(row 18, 19)만 검사. 스폰 위치가 그 근처이므로, 그곳에 블록이 있으면 더 스폰할 수 없음. | 8단계 |
+| **ClearFullRows 흐름** | IsRowFull → ClearRow(지우기) → MoveRowsDown(위 행들 내리기) → 지운 줄 수 반환. | 6단계 |
 
 ---
 

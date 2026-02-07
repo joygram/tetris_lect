@@ -9,6 +9,8 @@ title: 코드 리뷰 5단계 - TetrisBlock
 
 **역할**: **한 블록**의 이동·회전·낙하·고정을 담당합니다. ValidMove로 이동 가능 여부를 검사하고, LockPiece에서 GameBoard·GameController·Spawner와 연결합니다.
 
+**관련 단계 복기**: [4단계 - 블록 이동 구현](../../단계별-학습/4단계-블록-이동-구현.md)(ValidMove, MoveLeft/Right/Down, Rotate, 자동 낙하) → [6단계 - 행 제거 시스템](../../단계별-학습/6단계-행-제거-시스템.md)(LockPiece, AddToGrid, ClearFullRows, SpawnNext) → [7단계 - 점수·레벨 시스템](../../단계별-학습/7단계-점수-레벨-시스템.md)(AddScore 연동) → [8단계 - 게임 완성](../../단계별-학습/8단계-게임-완성.md)(HardDrop).
+
 ---
 
 ## 전체 코드
@@ -82,11 +84,11 @@ public class TetrisBlock : MonoBehaviour
     public void Rotate()
     {
         transform.Rotate(0f, 0f, -90f);
-        if (!ValidMove(Vector3.zero))
+        if (!ValidMove(Vector3.zero))   // 회전 후 위치가 유효하지 않으면 되돌리기
             transform.Rotate(0f, 0f, 90f);
     }
 
-    public void LockPiece()
+    public void LockPiece()   // 고정 → 행 제거 → 점수 → 다음 블록 스폰 (순서 유지)
     {
         gameBoard.AddToGrid(this);
         int linesCleared = gameBoard.ClearFullRows();
@@ -147,13 +149,15 @@ public class TetrisBlock : MonoBehaviour
 
 ## 복습
 
-| 구분 | 내용 |
-|------|------|
-| **ValidMove** | 이동/회전 **전**에 “그 위치가 보드 안이고, 칸이 비어 있는지” 검사. 범위 밖이거나 이미 쌓인 칸이면 false. |
-| **자식 좌표** | 부모 position + TransformDirection(자식 localPosition)으로 자식의 월드 좌표를 구하고, RoundToInt로 칸 인덱스로 씀. |
-| **MoveDown과 LockPiece** | MoveDown에서 ValidMove(down)가 false면 “바닥 또는 블록에 닿음”이므로 LockPiece()로 고정. |
-| **레벨과 낙하** | Update에서 fallSpeed / gameController.level로 간격을 줄여, 레벨이 높을수록 빨리 낙하. |
-| **LockPiece 흐름** | AddToGrid → ClearFullRows → AddScore(linesCleared) → SpawnNext() → Destroy. 순서가 바뀌면 안 됨. |
+아래는 **4·6·7·8단계**에서 배운 내용을 정리한 복기 표입니다.
+
+| 구분 | 내용 | 관련 단계 |
+|------|------|-----------|
+| **ValidMove** | 이동/회전 **전**에 “그 위치가 보드 안이고, 칸이 비어 있는지” 검사. 범위 밖이거나 이미 쌓인 칸이면 false. | 4·6단계 |
+| **자식 좌표** | 부모 position + TransformDirection(자식 localPosition)으로 자식의 월드 좌표를 구하고, RoundToInt로 칸 인덱스로 씀. | 4단계 |
+| **MoveDown과 LockPiece** | MoveDown에서 ValidMove(down)가 false면 “바닥 또는 블록에 닿음”이므로 LockPiece()로 고정. | 6단계 |
+| **레벨과 낙하** | Update에서 fallSpeed / gameController.level로 간격을 줄여, 레벨이 높을수록 빨리 낙하. | 7단계 |
+| **LockPiece 흐름** | AddToGrid → ClearFullRows → AddScore(linesCleared) → SpawnNext() → Destroy. 순서가 바뀌면 안 됨. | 6·7·8단계 |
 
 ---
 
