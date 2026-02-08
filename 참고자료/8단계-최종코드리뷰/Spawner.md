@@ -18,14 +18,19 @@ title: 코드 리뷰 4단계 - Spawner
 ```csharp
 using UnityEngine;
 
+/// <summary>
+/// 다음 블록을 프리팹 배열에서 랜덤으로 골라 spawnPoint 위치에 생성.
+/// 게임 오버일 때는 스폰하지 않고 GameOver 호출 후 Time.timeScale = 0으로 정지.
+/// </summary>
 public class Spawner : MonoBehaviour
 {
-    public GameObject[] tetrisBlockPrefabs;   // Inspector에서 7개 연결
-    public Transform spawnPoint;               // 스폰 위치
+    public GameObject[] tetrisBlockPrefabs;   // Inspector에서 I, O, T 등 7종 프리팹 연결
+    public Transform spawnPoint;              // 블록이 생성될 월드 위치
 
     private GameBoard gameBoard;
     private GameController gameController;
 
+    /// <summary>게임 시작 시 한 번 실행. GameBoard·GameController 참조 저장 후 첫 블록 스폰.</summary>
     void Start()
     {
         gameBoard = FindObjectOfType<GameBoard>();
@@ -33,16 +38,20 @@ public class Spawner : MonoBehaviour
         SpawnNext();
     }
 
+    /// <summary>
+    /// 다음 블록 생성. LockPiece에서 호출됨.
+    /// 게임 오버(스폰 영역에 블록 있음)면 GameOver 호출 후 시간 정지하고 return.
+    /// </summary>
     public void SpawnNext()
     {
-        if (gameBoard.IsGameOver())   // 스폰 영역(맨 위 2줄)에 블록 있으면 게임 오버
+        if (gameBoard.IsGameOver())
         {
             Debug.Log("Game Over!");
             gameController.GameOver();
-            Time.timeScale = 0;       // 게임 시간 정지
+            Time.timeScale = 0;   // 게임 시간 정지 (Update 등이 멈춤)
             return;
         }
-        int randomIndex = Random.Range(0, tetrisBlockPrefabs.Length);   // 0~6 중 하나
+        int randomIndex = Random.Range(0, tetrisBlockPrefabs.Length);   // 0 ~ (Length-1) 중 하나
         Instantiate(
             tetrisBlockPrefabs[randomIndex],
             spawnPoint.position,

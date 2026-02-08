@@ -18,28 +18,39 @@ title: 코드 리뷰 1단계 - GameBoard
 ```csharp
 using UnityEngine;
 
+/// <summary>
+/// 게임 보드 그리드를 관리하는 클래스.
+/// width×height 2차원 배열로 고정된 블록을 저장하고,
+/// 블록 고정(AddToGrid), 행 제거(ClearFullRows), 게임 오버 판단(IsGameOver) 등을 담당.
+/// </summary>
 public class GameBoard : MonoBehaviour
 {
-    public int width = 10;      // 가로 10칸
-    public int height = 20;     // 세로 20칸
-    private Transform[,] grid;  // 2차원 배열: 각 칸에 고정된 블록 조각(Transform) 저장
+    public int width = 10;      // 가로 칸 수 (기본 10)
+    public int height = 20;     // 세로 칸 수 (기본 20)
+    private Transform[,] grid;  // 2차원 배열: grid[x,y]에 해당 칸에 고정된 블록 조각(Transform) 저장, 비면 null
 
+    /// <summary>씬 로드 시 한 번 실행. 그리드 배열을 생성하고 로그 출력.</summary>
     void Awake()
     {
         grid = new Transform[width, height];
         Debug.Log($"게임 보드 생성: {width}x{height}");
     }
 
+    /// <summary>주어진 (x,y)가 보드 범위 안이면 true, 밖이면 false 반환.</summary>
     public bool IsValidPosition(Vector2Int position)
     {
         return position.x >= 0 && position.x < width &&
                position.y >= 0 && position.y < height;
     }
 
+    /// <summary>
+    /// 블록을 그리드에 고정. 블록의 각 자식(큐브)을 보드 칸에 배치하고 grid에 등록.
+    /// 역순 순회: SetParent 시 childCount가 줄어들므로 정순이면 일부만 처리됨.
+    /// </summary>
     public void AddToGrid(TetrisBlock block)
     {
         Vector3 parentPos = block.transform.position;
-        for (int i = block.transform.childCount - 1; i >= 0; i--)   // ⚠ 역순
+        for (int i = block.transform.childCount - 1; i >= 0; i--)   // 역순 필수
         {
             Transform child = block.transform.GetChild(i);
             Vector3 childWorld = parentPos + block.transform.TransformDirection(child.localPosition);
@@ -53,7 +64,8 @@ public class GameBoard : MonoBehaviour
         }
     }
 
-    public bool IsGameOver()   // 맨 위 2줄(row 18,19)에 블록이 있으면 true
+    /// <summary>스폰 영역(맨 위 2줄, row 18~19)에 블록이 하나라도 있으면 true. 게임 오버 판정용.</summary>
+    public bool IsGameOver()
     {
         for (int y = height - 2; y < height; y++)
         {
@@ -66,6 +78,7 @@ public class GameBoard : MonoBehaviour
         return false;
     }
 
+    /// <summary>해당 칸이 비어 있으면 true. 보드 밖이거나 블록이 있으면 false. 이동 가능 여부 검사용.</summary>
     public bool IsCellEmpty(int x, int y)
     {
         if (x < 0 || x >= width || y < 0 || y >= height)
@@ -73,6 +86,7 @@ public class GameBoard : MonoBehaviour
         return grid[x, y] == null;
     }
 
+    /// <summary>해당 행이 모두 채워졌는지 검사. 한 칸이라도 null이면 false.</summary>
     bool IsRowFull(int row)
     {
         for (int x = 0; x < width; x++)
@@ -83,6 +97,7 @@ public class GameBoard : MonoBehaviour
         return true;
     }
 
+    /// <summary>해당 행의 모든 칸 오브젝트를 Destroy하고 grid를 null로 초기화.</summary>
     void ClearRow(int row)
     {
         for (int x = 0; x < width; x++)
@@ -95,6 +110,7 @@ public class GameBoard : MonoBehaviour
         }
     }
 
+    /// <summary>지운 행(clearedRow) 위쪽의 모든 행을 한 칸씩 아래로 내림. grid 참조와 position 갱신.</summary>
     void MoveRowsDown(int clearedRow)
     {
         for (int y = clearedRow + 1; y < height; y++)
@@ -111,6 +127,7 @@ public class GameBoard : MonoBehaviour
         }
     }
 
+    /// <summary>아래부터 가득 찬 행을 찾아 지우고, 위 행들을 내린 뒤 지운 줄 개수 반환. 점수 계산에 사용.</summary>
     public int ClearFullRows()
     {
         int linesCleared = 0;
@@ -120,7 +137,7 @@ public class GameBoard : MonoBehaviour
             {
                 ClearRow(y);
                 MoveRowsDown(y);
-                y--;
+                y--;           // 같은 인덱스가 다시 채워졌을 수 있으므로 한 번 더 검사
                 linesCleared++;
             }
         }

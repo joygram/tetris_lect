@@ -19,24 +19,33 @@ title: 코드 리뷰 2단계 - GameController
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// 점수·줄·레벨을 관리하고 UI(점수/줄/레벨/게임오버 텍스트)를 갱신.
+/// TetrisBlock.LockPiece → AddScore, Spawner → GameOver 호출을 받음.
+/// </summary>
 public class GameController : MonoBehaviour
 {
-    public int score = 0;
-    public int lines = 0;
-    public int level = 1;
+    public int score = 0;   // 현재 점수
+    public int lines = 0;   // 누적 지운 줄 수
+    public int level = 1;   // 레벨 (10줄마다 1 증가)
 
-    public TMP_Text scoreText;   // Inspector에서 연결
-    public TMP_Text linesText;
-    public TMP_Text levelText;
-    public TMP_Text gameOverText;   // 게임 오버 시 표시
+    public TMP_Text scoreText;     // Inspector에서 연결: 점수 표시용 TextMeshPro
+    public TMP_Text linesText;     // 줄 수 표시용
+    public TMP_Text levelText;     // 레벨 표시용
+    public TMP_Text gameOverText;  // 게임 오버 시에만 표시하는 텍스트
 
+    /// <summary>게임 시작 시 한 번 실행. 게임오버 텍스트 숨기고 UI 초기 갱신.</summary>
     void Start()
     {
-        gameOverText.gameObject.SetActive(false);   // 시작할 때 숨김
+        gameOverText.gameObject.SetActive(false);
         UpdateUI();
     }
 
-    public void AddScore(int linesCleared)   // 1줄 100, 2줄 300, 3줄 500, 4줄 800 × 레벨
+    /// <summary>
+    /// 지운 줄 수에 따라 점수·줄·레벨 갱신. 1줄 100, 2줄 300, 3줄 500, 4줄 800 × 레벨.
+    /// LockPiece에서 ClearFullRows() 반환값을 넘겨 호출.
+    /// </summary>
+    public void AddScore(int linesCleared)
     {
         int points = 0;
         switch (linesCleared)
@@ -48,16 +57,18 @@ public class GameController : MonoBehaviour
         }
         score += points * level;
         lines += linesCleared;
-        level = (lines / 10) + 1;
+        level = (lines / 10) + 1;   // 10줄마다 레벨 1 증가
         UpdateUI();
     }
 
+    /// <summary>게임 오버 시 호출. "Game Over" 텍스트를 화면에 표시.</summary>
     public void GameOver()
     {
         gameOverText.gameObject.SetActive(true);
         gameOverText.text = "Game Over";
     }
 
+    /// <summary>점수·줄·레벨 텍스트를 현재 값으로 갱신.</summary>
     void UpdateUI()
     {
         scoreText.text = $"점수: {score}";

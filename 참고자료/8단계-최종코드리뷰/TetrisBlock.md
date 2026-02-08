@@ -18,17 +18,26 @@ title: 코드 리뷰 5단계 - TetrisBlock
 ```csharp
 using UnityEngine;
 
+/// <summary>
+/// 한 블록의 이동·회전·낙하·고정을 담당.
+/// ValidMove로 이동 가능 여부 검사, LockPiece에서 GameBoard·GameController·Spawner와 연동.
+/// </summary>
 public class TetrisBlock : MonoBehaviour
 {
     private GameBoard gameBoard;
-    public float fallSpeed = 1f;   // 몇 초에 한 칸 낙하
-    private float fallTimer = 0f;
+    public float fallSpeed = 1f;   // 기본 낙하 간격(초). 레벨로 나눠 사용해 레벨 올라갈수록 빨라짐
+    private float fallTimer = 0f;  // 자동 낙하용 타이머
 
+    /// <summary>Start에서 GameBoard 참조를 한 번 찾아 둠.</summary>
     void Start()
     {
         gameBoard = FindObjectOfType<GameBoard>();
     }
 
+    /// <summary>
+    /// 이 블록이 position + offset으로 이동했을 때 유효한지 검사.
+    /// 각 자식의 월드 좌표를 칸 좌표로 바꿔 보드 범위·빈 칸 여부 확인.
+    /// </summary>
     public bool ValidMove(Vector3 offset)
     {
         Vector3 parentNew = transform.position + offset;
@@ -55,6 +64,7 @@ public class TetrisBlock : MonoBehaviour
         if (ValidMove(Vector3.right))
             transform.position += Vector3.right;
     }
+    /// <summary>한 칸 아래로 이동. 이동 불가면 바닥/블록 도달이므로 LockPiece 호출.</summary>
     public void MoveDown()
     {
         if (ValidMove(Vector3.down))
@@ -62,6 +72,7 @@ public class TetrisBlock : MonoBehaviour
         else
             LockPiece();
     }
+    /// <summary>바닥까지 한 칸씩 내린 뒤 고정. 스페이스 키로 호출.</summary>
     public void HardDrop()
     {
         while (ValidMove(Vector3.down))
@@ -69,6 +80,7 @@ public class TetrisBlock : MonoBehaviour
         LockPiece();
     }
 
+    /// <summary>자동 낙하. 레벨이 높을수록 fallSpeed/level로 간격이 짧아져 빨라짐.</summary>
     void Update()
     {
         GameController gameController = FindObjectOfType<GameController>();
@@ -81,14 +93,19 @@ public class TetrisBlock : MonoBehaviour
         }
     }
 
+    /// <summary>Z축 -90도 회전. 회전 후 위치가 유효하지 않으면 원래대로 되돌림.</summary>
     public void Rotate()
     {
         transform.Rotate(0f, 0f, -90f);
-        if (!ValidMove(Vector3.zero))   // 회전 후 위치가 유효하지 않으면 되돌리기
+        if (!ValidMove(Vector3.zero))
             transform.Rotate(0f, 0f, 90f);
     }
 
-    public void LockPiece()   // 고정 → 행 제거 → 점수 → 다음 블록 스폰 (순서 유지)
+    /// <summary>
+    /// 블록 고정 → 가득 찬 행 제거 → 점수 갱신 → 다음 블록 스폰 → 이 오브젝트 Destroy.
+    /// 호출 순서 변경 시 동작이 깨질 수 있으므로 유지.
+    /// </summary>
+    public void LockPiece()
     {
         gameBoard.AddToGrid(this);
         int linesCleared = gameBoard.ClearFullRows();

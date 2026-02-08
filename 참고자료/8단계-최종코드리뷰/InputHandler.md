@@ -18,15 +18,21 @@ title: 코드 리뷰 3단계 - InputHandler
 ```csharp
 using UnityEngine;
 
+/// <summary>
+/// 키 입력을 받아 현재 TetrisBlock의 이동·회전·하드드롭을 호출.
+/// 좌우·아래는 쿨다운으로 연속 입력 시 0.1초 간격만 반응.
+/// </summary>
 public class InputHandler : MonoBehaviour
 {
-    private float moveCooldown = 0.1f;   // 연속 입력 간격(초) — 키 누르고 있으면 0.1초마다 한 번만 이동
-    private float moveTimer = 0f;
+    private float moveCooldown = 0.1f;   // 연속 입력 시 이동 허용 간격(초). 키를 누르고 있으면 0.1초마다 한 번만 이동
+    private float moveTimer = 0f;        // 쿨다운 경과 시간 누적
 
+    /// <summary>매 프레임 키 입력 검사. 좌우·아래는 GetKey+쿨다운, 회전·스페이스는 GetKeyDown(한 번만).</summary>
     void Update()
     {
         moveTimer += Time.deltaTime;
 
+        // 좌우 이동: 키가 눌린 동안 쿨다운마다 한 번씩만 이동
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             if (moveTimer >= moveCooldown) { MoveLeft(); moveTimer = 0f; }
@@ -35,6 +41,7 @@ public class InputHandler : MonoBehaviour
         {
             if (moveTimer >= moveCooldown) { MoveRight(); moveTimer = 0f; }
         }
+        // 아래 이동: 쿨다운 적용, 현재 블록이 있을 때만
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
             TetrisBlock current = FindObjectOfType<TetrisBlock>();
@@ -44,11 +51,12 @@ public class InputHandler : MonoBehaviour
                 moveTimer = 0f;
             }
         }
+        // 회전: 키를 누른 그 프레임 한 번만
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             Rotate();
         }
-
+        // 하드 드롭(바닥까지 즉시 낙하): 스페이스 한 번만
         if (Input.GetKeyDown(KeyCode.Space))
         {
             TetrisBlock current = FindObjectOfType<TetrisBlock>();
@@ -59,16 +67,19 @@ public class InputHandler : MonoBehaviour
         }
     }
 
+    /// <summary>씬에서 현재 TetrisBlock을 찾아 왼쪽으로 한 칸 이동 요청.</summary>
     void MoveLeft()
     {
         TetrisBlock current = FindObjectOfType<TetrisBlock>();
         if (current != null) current.MoveLeft();
     }
+    /// <summary>씬에서 현재 TetrisBlock을 찾아 오른쪽으로 한 칸 이동 요청.</summary>
     void MoveRight()
     {
         TetrisBlock current = FindObjectOfType<TetrisBlock>();
         if (current != null) current.MoveRight();
     }
+    /// <summary>씬에서 현재 TetrisBlock을 찾아 90도 회전 요청.</summary>
     void Rotate()
     {
         TetrisBlock current = FindObjectOfType<TetrisBlock>();
